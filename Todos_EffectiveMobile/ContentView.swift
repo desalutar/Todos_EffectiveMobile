@@ -8,49 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    var pickerNames = ["All", "Open", "Closed"]
+    @State private var pickerNames = ["All", "Open", "Closed"]
     @State private var selectedPicker = 0
-    @State private var tables = [TaskView()]
+    @State private var tables = [TaskView(), TaskView()]
     var body: some View {
         NavigationStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Today's Task")
-                        .font(.title)
-                        .bold()
-                    Text("Wednesday, 11 MAY ")
-                        .font(.callout)
-                        .opacity(0.5)
-                }
-                Spacer()
-                Button {
+            VStack(spacing: 0) {
+                HeaderView()
                     
-                } label: {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 15)
-                            .frame(width: 125, height: 50)
-                            .foregroundStyle(.blue.opacity(0.2))
-                        Label("New task", systemImage: "plus")
-                            .foregroundStyle(.blue)
-                    }
-                }
-            }.padding()
-            Picker(selection: $selectedPicker) {
-                ForEach(0..<pickerNames.count, id: \.self) { index in
-                    Text(pickerNames[index])
-                }
-            } label: {
-                
+                PickerView(selectedPicker: $selectedPicker,
+                           pickerNames: $pickerNames)
+                List {
+                    ForEach(0..<tables.count, id: \.self) { table in
+                        TaskView()
+                    }.onDelete(perform: deleteItems(at:))
+                }.listRowSpacing(10)
+                    .padding(.top, 0)
             }
-            .pickerStyle(.segmented)
-            
-            .padding()
-
-
-            List {
-                TaskView()
-            }
+            .background(Color(red: 242/255, green: 242/255, blue: 247/255))
         }
+    }
+    func deleteItems(at offsets: IndexSet) {
+        tables.remove(atOffsets: offsets)
     }
 }
 
@@ -62,6 +41,7 @@ struct TaskView: View {
                 VStack(alignment: .listRowSeparatorLeading) {
                     Text("title")
                         .font(.title2)
+                        .strikethrough(isCompleted ? false : true)
                     Text("description")
                         .font(.callout)
                         .opacity(0.6)
@@ -75,6 +55,7 @@ struct TaskView: View {
                     Image(systemName: isCompleted ? "circle" : "checkmark.circle.fill")
                         .resizable()
                         .frame(width: 25, height: 25)
+                        .foregroundStyle(isCompleted ? .gray : .blue)
                 }
             }
             Divider()
@@ -89,7 +70,7 @@ struct TaskView: View {
                     .opacity(0.3)
                 
             }
-        }.padding()
+        }.padding(9)
         
     }
 }

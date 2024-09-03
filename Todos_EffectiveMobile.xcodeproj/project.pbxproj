@@ -12,6 +12,8 @@
 		239FE1402C872CA100021908 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 239FE13F2C872CA100021908 /* Assets.xcassets */; };
 		239FE1432C872CA100021908 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 239FE1422C872CA100021908 /* Preview Assets.xcassets */; };
 		239FE14A2C8733AB00021908 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239FE1492C8733AB00021908 /* Model.swift */; };
+		239FE14C2C8778C600021908 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239FE14B2C8778C600021908 /* HeaderView.swift */; };
+		239FE14E2C87791300021908 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239FE14D2C87791300021908 /* PickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		239FE13F2C872CA100021908 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		239FE1422C872CA100021908 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		239FE1492C8733AB00021908 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		239FE14B2C8778C600021908 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		239FE14D2C87791300021908 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 			children = (
 				239FE13B2C872C9F00021908 /* Todos_EffectiveMobileApp.swift */,
 				239FE13D2C872C9F00021908 /* ContentView.swift */,
+				239FE14D2C87791300021908 /* PickerView.swift */,
+				239FE14B2C8778C600021908 /* HeaderView.swift */,
 				239FE1492C8733AB00021908 /* Model.swift */,
 				239FE13F2C872CA100021908 /* Assets.xcassets */,
 				239FE1412C872CA100021908 /* Preview Content */,
@@ -143,6 +149,8 @@
 				239FE14A2C8733AB00021908 /* Model.swift in Sources */,
 				239FE13E2C872C9F00021908 /* ContentView.swift in Sources */,
 				239FE13C2C872C9F00021908 /* Todos_EffectiveMobileApp.swift in Sources */,
+				239FE14E2C87791300021908 /* PickerView.swift in Sources */,
+				239FE14C2C8778C600021908 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
