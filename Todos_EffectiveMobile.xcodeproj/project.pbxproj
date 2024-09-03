@@ -11,6 +11,7 @@
 		239FE13E2C872C9F00021908 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239FE13D2C872C9F00021908 /* ContentView.swift */; };
 		239FE1402C872CA100021908 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 239FE13F2C872CA100021908 /* Assets.xcassets */; };
 		239FE1432C872CA100021908 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 239FE1422C872CA100021908 /* Preview Assets.xcassets */; };
+		239FE14A2C8733AB00021908 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239FE1492C8733AB00021908 /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		239FE13D2C872C9F00021908 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		239FE13F2C872CA100021908 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		239FE1422C872CA100021908 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		239FE1492C8733AB00021908 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				239FE13B2C872C9F00021908 /* Todos_EffectiveMobileApp.swift */,
 				239FE13D2C872C9F00021908 /* ContentView.swift */,
+				239FE1492C8733AB00021908 /* Model.swift */,
 				239FE13F2C872CA100021908 /* Assets.xcassets */,
 				239FE1412C872CA100021908 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				239FE14A2C8733AB00021908 /* Model.swift in Sources */,
 				239FE13E2C872C9F00021908 /* ContentView.swift in Sources */,
 				239FE13C2C872C9F00021908 /* Todos_EffectiveMobileApp.swift in Sources */,
 			);
