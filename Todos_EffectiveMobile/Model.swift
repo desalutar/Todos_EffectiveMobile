@@ -7,9 +7,15 @@
 
 import Foundation
 
-struct TaskModel: Equatable, Identifiable {
-    var id: UUID
+struct TaskModel: Decodable, Identifiable {
+    var id: Int
     var todo: String
+    var description: String?
     var completed: Bool
     var userId: Int
+    var date: Date
+}
+
+class TaskStore: ObservableObject {
+    @Published var tasks: [TaskModel] = []
 }

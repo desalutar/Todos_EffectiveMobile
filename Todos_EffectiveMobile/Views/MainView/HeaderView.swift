@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HeaderView: View {
+    @EnvironmentObject var taskStore: TaskStore
+    @State private var isShowNewTaskView = false
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -20,7 +22,7 @@ struct HeaderView: View {
             }
             Spacer()
             Button {
-                
+                isShowNewTaskView.toggle()
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 15)
@@ -30,10 +32,13 @@ struct HeaderView: View {
                         .foregroundStyle(.blue)
                 }
             }
+            .sheet(isPresented: $isShowNewTaskView) { CreateNewTaskView(
+                                                    isPresented: $isShowNewTaskView) }
         }.padding()
     }
 }
 
 #Preview {
     HeaderView()
+        .environmentObject(TaskStore())
 }
