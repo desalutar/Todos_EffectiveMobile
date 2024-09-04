@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct Todos_EffectiveMobileApp: App {
+    let tasks = TaskStore()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environmentObject(tasks)
         }
     }
 }
