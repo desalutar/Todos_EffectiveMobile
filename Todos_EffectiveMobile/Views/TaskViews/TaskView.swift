@@ -14,7 +14,7 @@ struct TaskView: View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .listRowSeparatorLeading) {
-                    Text(taskModel.todo)
+                    Text(taskModel.title)
                         .font(.title2)
                         .strikethrough(taskModel.completed ? false : true)
                     Text(taskModel.description ?? "")
@@ -35,7 +35,7 @@ struct TaskView: View {
             }
             Divider()
             HStack {
-                Text(taskModel.date,formatter: dateFormatter)
+                Text(taskModel.date ?? .now, formatter: dateFormatter)
                     .font(.callout)
                     .padding(.top, 10)
                     .opacity(0.5)

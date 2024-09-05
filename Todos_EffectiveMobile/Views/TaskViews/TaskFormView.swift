@@ -10,7 +10,7 @@ import SwiftUI
 struct TaskFormView: View {
     @Binding var taskName: String
     @Binding var taskDescription: String
-    @Binding var taskDate: Date
+    @Binding var taskDate: Date?
     
     var body: some View {
         VStack(spacing: 15) {
@@ -26,9 +26,13 @@ struct TaskFormView: View {
                         .stroke(Color(red: 243/255, green: 242/255, blue: 247/255), lineWidth: 3)
                 }
             
-            DatePicker("Selected task date", selection: $taskDate)
-                .labelsHidden()
-                .datePickerStyle(.wheel)
+            DatePicker("Selected task date",
+                       selection: .init(
+                        get: { self.taskDate ?? Date() },
+                        set: { self.taskDate = $0 }
+                       ))
+            .labelsHidden()
+            .datePickerStyle(.wheel)
         }.padding(.top, 15)
     }
 }

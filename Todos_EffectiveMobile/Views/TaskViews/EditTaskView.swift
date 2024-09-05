@@ -21,8 +21,8 @@ struct EditTaskView: View {
         VStack {
             TaskFormView(
                 taskName: Binding(
-                    get: { editedTask.todo },
-                    set: { editedTask.todo = $0 }
+                    get: { editedTask.title },
+                    set: { editedTask.title = $0 }
                 ),
                 taskDescription: Binding(
                     get: { editedTask.description ?? "" },

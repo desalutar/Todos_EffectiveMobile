@@ -67,6 +67,7 @@
 			children = (
 				239FE13B2C872C9F00021908 /* Todos_EffectiveMobileApp.swift */,
 				239FE1532C886B9D00021908 /* Views */,
+				239FE15E2C88BB5300021908 /* Network */,
 				239FE1492C8733AB00021908 /* Model.swift */,
 				239FE13F2C872CA100021908 /* Assets.xcassets */,
 				239FE1412C872CA100021908 /* Preview Content */,
@@ -110,6 +111,13 @@
 				239FE14B2C8778C600021908 /* HeaderView.swift */,
 			);
 			path = MainView;
+			sourceTree = "<group>";
+		};
+		239FE15E2C88BB5300021908 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
