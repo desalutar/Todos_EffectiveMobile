@@ -6,51 +6,57 @@
 //
 
 import SwiftUI
-
 struct MainView: View {
     @EnvironmentObject var taskStore: TaskStore
+    @StateObject var viewModel: MainViewModel
     @State private var pickerNames = ["All", "Open", "Closed"]
-    @State private var isShowingEditTaskView = false
-    @State private var selectedTask: TaskModel?
-    
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 HeaderView(taskStore: _taskStore)
                 FilterButtonView()
                     .padding(.leading, 10)
-                NavigationStack {
-                    List {
-                        ForEach(taskStore.tasks.indices, id: \.self) { task in
-                            TaskView(taskModel: $taskStore.tasks[task])
-                                .swipeActions(edge: .leading) {
-                                    Button {
-                                        self.selectedTask = taskStore.tasks[task]
-                                        self.isShowingEditTaskView = true
-                                    } label: {
-                                        Label("Edit", systemImage: "pencil")
-                                            .tint(.blue)
-                                    }
-                                }
-                                .sheet(isPresented: $isShowingEditTaskView) {
-                                    EditTaskView(isPresented: $isShowingEditTaskView, task: self.taskStore.tasks[task])
-                                }
-                        }
-                        .onDelete(perform: deleteItems(at:))
-                    }
-                    .listRowSpacing(10)
-                    .padding(.top, 0)
-                }
+                
+                taskList
             }
             .background(Color(red: 242/255, green: 242/255, blue: 247/255))
+            .task(priority: .background, {
+                await taskStore.fetchTasks()
+            })
         }
     }
-    func deleteItems(at offsets: IndexSet) {
-        taskStore.tasks.remove(atOffsets: offsets)
+}
+
+private extension MainView {
+    var taskList: some View {
+        List {
+            if taskStore.isLoading {
+                ProgressView()
+            } else {
+                ForEach(Array(taskStore.tasks.enumerated()), id: \.offset) { index, task in
+                    TaskView(taskModel: $taskStore.tasks[index])
+                        .swipeActions(edge: .leading) {
+                            viewModel.editButton(for: index, taskStore: taskStore)
+                        }
+                        .sheet(isPresented: $viewModel.isShowingEditTaskView) {
+                            EditTaskView(isPresented: $viewModel.isShowingEditTaskView,
+                                         task: task)
+                        }
+                }
+                .onDelete { indexSet in
+                    viewModel.deleteTask(at: indexSet.first!,
+                                         from: taskStore)
+                }
+            }
+        }
+        .listRowSpacing(10)
+        .padding(.top, 0)
     }
 }
 
 #Preview {
-    MainView()
+    @Previewable var viewModel = MainViewModel()
+    MainView(viewModel: viewModel)
         .environmentObject(TaskStore())
 }

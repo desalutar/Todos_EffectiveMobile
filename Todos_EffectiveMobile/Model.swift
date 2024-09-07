@@ -7,24 +7,31 @@
 
 import Foundation
 
-struct TaskModel: Decodable, Identifiable {
+struct TaskResponse: Decodable {
+    let todos: [TaskModel]
+    let total: Int
+    let skip: Int
+    let limit: Int
+}
+
+struct TaskModel: Decodable, Identifiable, Equatable {
     let id: Int
-    var title: String
+    var todo: String
     var description: String?
     var completed: Bool
     var userId: Int
     var date: Date?
-
+    
     init(
         id: Int,
-        title: String,
+        todo: String,
         description: String?,
         completed: Bool,
         userId: Int,
         date: Date? = nil
     ) {
         self.id = id
-        self.title = title
+        self.todo = todo
         self.description = description
         self.completed = completed
         self.userId = userId
@@ -33,5 +40,26 @@ struct TaskModel: Decodable, Identifiable {
 }
 
 class TaskStore: ObservableObject {
-    @Published var tasks: [TaskModel] = []
+    @Published  var tasks: [TaskModel] = []
+    @Published @MainActor var isLoading = true
+    
+    @MainActor
+    func fetchTasks() async {
+        isLoading = true
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: URL(string: "https://dummyjson.com/todos")!)
+            let response = try JSONDecoder().decode(TaskResponse.self, from: data)
+            
+            tasks = response.todos
+        } catch {
+            print("Error fetching tasks: \(error.localizedDescription)")
+        }
+        
+        isLoading = false
+    }
+}
+enum APIError: Error {
+    case invalidURL
+    case noData
 }

@@ -33,6 +33,7 @@ struct HeaderView: View {
                 }
             }
             .sheet(isPresented: $isShowNewTaskView) { CreateNewTaskView(
+                                                    taskStore: taskStore,
                                                     isPresented: $isShowNewTaskView) }
         }.padding()
     }

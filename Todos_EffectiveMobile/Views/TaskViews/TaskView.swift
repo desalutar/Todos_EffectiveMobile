@@ -14,7 +14,7 @@ struct TaskView: View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .listRowSeparatorLeading) {
-                    Text(taskModel.title)
+                    Text(taskModel.todo)
                         .font(.title2)
                         .strikethrough(taskModel.completed ? false : true)
                     Text(taskModel.description ?? "")

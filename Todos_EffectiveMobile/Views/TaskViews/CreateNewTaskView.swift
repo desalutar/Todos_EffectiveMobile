@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreateNewTaskView: View {
-    @EnvironmentObject var taskStore: TaskStore
+    @State var taskStore: TaskStore
     @State private var taskName = ""
     @State private var taskDescription = ""
     @State private var taskDate: Date? = Date()
@@ -23,7 +23,7 @@ struct CreateNewTaskView: View {
             Button {
                 let newTask = TaskModel(
                     id: taskStore.tasks.count + 1,
-                    title: taskName,
+                    todo: taskName,
                     description: taskDescription,
                     completed: true,
                     userId: taskStore.tasks.count + 1,
