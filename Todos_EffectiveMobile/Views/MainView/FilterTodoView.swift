@@ -23,7 +23,6 @@ struct FilterButtonView: View {
                 
                 if activeButtonIndex == index && index != buttons.count - 1 {
                     Divider()
-                    
                 }
             }
             Spacer()
