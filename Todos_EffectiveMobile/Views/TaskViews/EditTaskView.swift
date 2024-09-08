@@ -33,8 +33,9 @@ struct EditTaskView: View {
             Button {
                 if let index = taskStore.tasks.firstIndex(where: { $0.id == editedTask.id }) {
                     taskStore.tasks[index] = editedTask
+                    isPresented.toggle()
                 }
-                isPresented.toggle()
+                
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 15)
@@ -48,4 +49,3 @@ struct EditTaskView: View {
         }
     }
 }
-

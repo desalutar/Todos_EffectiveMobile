@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2363C4712C8C61DD006B1A42 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363C4702C8C61DD006B1A42 /* MainViewModel.swift */; };
-		2363C4752C8C79FB006B1A42 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363C4742C8C79FB006B1A42 /* NetworkService.swift */; };
 		239FE13C2C872C9F00021908 /* Todos_EffectiveMobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239FE13B2C872C9F00021908 /* Todos_EffectiveMobileApp.swift */; };
 		239FE13E2C872C9F00021908 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239FE13D2C872C9F00021908 /* MainView.swift */; };
 		239FE1402C872CA100021908 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 239FE13F2C872CA100021908 /* Assets.xcassets */; };
@@ -24,7 +23,6 @@
 
 /* Begin PBXFileReference section */
 		2363C4702C8C61DD006B1A42 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		2363C4742C8C79FB006B1A42 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		239FE1382C872C9F00021908 /* Todos_EffectiveMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todos_EffectiveMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		239FE13B2C872C9F00021908 /* Todos_EffectiveMobileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todos_EffectiveMobileApp.swift; sourceTree = "<group>"; };
 		239FE13D2C872C9F00021908 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -69,9 +67,9 @@
 		239FE13A2C872C9F00021908 /* Todos_EffectiveMobile */ = {
 			isa = PBXGroup;
 			children = (
+				23FBC37B2C8E057B00A5CB31 /* ViewModels */,
 				239FE13B2C872C9F00021908 /* Todos_EffectiveMobileApp.swift */,
 				239FE1532C886B9D00021908 /* Views */,
-				239FE15E2C88BB5300021908 /* Network */,
 				239FE1492C8733AB00021908 /* Model.swift */,
 				239FE13F2C872CA100021908 /* Assets.xcassets */,
 				239FE1412C872CA100021908 /* Preview Content */,
@@ -111,19 +109,18 @@
 			isa = PBXGroup;
 			children = (
 				239FE13D2C872C9F00021908 /* MainView.swift */,
-				2363C4702C8C61DD006B1A42 /* MainViewModel.swift */,
 				239FE14F2C884AD300021908 /* FilterTodoView.swift */,
 				239FE14B2C8778C600021908 /* HeaderView.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
 		};
-		239FE15E2C88BB5300021908 /* Network */ = {
+		23FBC37B2C8E057B00A5CB31 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				2363C4742C8C79FB006B1A42 /* NetworkService.swift */,
+				2363C4702C8C61DD006B1A42 /* MainViewModel.swift */,
 			);
-			path = Network;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,7 +193,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2363C4752C8C79FB006B1A42 /* NetworkService.swift in Sources */,
 				239FE15D2C88B48800021908 /* TaskView.swift in Sources */,
 				239FE14A2C8733AB00021908 /* Model.swift in Sources */,
 				239FE13E2C872C9F00021908 /* MainView.swift in Sources */,

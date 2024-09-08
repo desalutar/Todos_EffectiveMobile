@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct MainView: View {
     @EnvironmentObject var taskStore: TaskStore
     @StateObject var viewModel: MainViewModel
@@ -35,15 +36,17 @@ private extension MainView {
                 ProgressView()
             } else {
                 ForEach(Array(taskStore.tasks.enumerated()), id: \.offset) { index, task in
-                    TaskView(taskModel: $taskStore.tasks[index])
-                        .swipeActions(edge: .leading) {
-                            viewModel.editButton(for: index, taskStore: taskStore)
-                        }
-                        .sheet(isPresented: $viewModel.isShowingEditTaskView) {
-                            EditTaskView(isPresented: $viewModel.isShowingEditTaskView,
-                                         task: task)
-                        }
-                }
+                        TaskView(taskModel: $taskStore.tasks[index])
+                            .swipeActions(edge: .leading) {
+                                viewModel.editButton(for: index, taskStore: taskStore)
+                            }
+                    
+                            .sheet(isPresented: $viewModel.isShowingEditTaskView) {
+                                if let task = viewModel.selectedTask {
+                                    EditTaskView(isPresented: $viewModel.isShowingEditTaskView, task: task)
+                                }
+                            }
+                    }
                 .onDelete { indexSet in
                     viewModel.deleteTask(at: indexSet.first!,
                                          from: taskStore)

@@ -40,7 +40,7 @@ struct TaskModel: Decodable, Identifiable, Equatable {
 }
 
 class TaskStore: ObservableObject {
-    @Published  var tasks: [TaskModel] = []
+    @Published @MainActor var tasks: [TaskModel] = []
     @Published @MainActor var isLoading = true
     
     @MainActor
