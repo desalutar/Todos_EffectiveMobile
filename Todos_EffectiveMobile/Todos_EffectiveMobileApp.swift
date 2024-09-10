@@ -13,9 +13,8 @@ struct Todos_EffectiveMobileApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView(viewModel: viewModel)
-                .environmentObject(TaskStore())
-                
+            MainView(viewModel: viewModel, coreDM: CoreDataManager())
+                .environmentObject(TaskStore(coreDataManager: CoreDataManager()))
         }
     }
 }

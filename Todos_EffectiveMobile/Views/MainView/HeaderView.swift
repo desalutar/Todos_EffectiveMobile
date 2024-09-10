@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HeaderView: View {
     @EnvironmentObject var taskStore: TaskStore
+    @Binding var coreDM: CoreDataManager
     @State private var isShowNewTaskView = false
     var body: some View {
         HStack {
@@ -32,14 +33,16 @@ struct HeaderView: View {
                         .foregroundStyle(.blue)
                 }
             }
-            .sheet(isPresented: $isShowNewTaskView) { CreateNewTaskView(
-                                                    taskStore: taskStore,
-                                                    isPresented: $isShowNewTaskView) }
+            .sheet(isPresented: $isShowNewTaskView) {
+                CreateNewTaskView(
+                    taskStore: taskStore,
+                    isPresented: $isShowNewTaskView,
+                    coreDM: $coreDM
+                )
+            }
+            .onDisappear {
+                coreDM.refreshTasks()
+            }
         }.padding()
     }
-}
-
-#Preview {
-    HeaderView()
-        .environmentObject(TaskStore())
 }
