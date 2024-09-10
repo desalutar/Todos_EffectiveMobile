@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct MainView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var taskStore: TaskStore
     @StateObject var viewModel: MainViewModel
     @State private var pickerNames = ["All", "Open", "Closed"]
-
+    
+    @State var coreDM: CoreDataManager
+    @State private var taskItems: [TaskItem] = [TaskItem]()
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                HeaderView(taskStore: _taskStore)
+                HeaderView(taskStore: _taskStore, coreDM: $coreDM)
                 FilterButtonView()
                     .padding(.leading, 10)
                 
@@ -25,6 +29,9 @@ struct MainView: View {
             .task(priority: .background, {
                 await taskStore.fetchTasks()
             })
+            .onAppear {
+                taskItems = coreDM.getAllTasks().sorted { $0.userId > $1.userId }
+            }
         }
     }
 }
@@ -32,24 +39,30 @@ struct MainView: View {
 private extension MainView {
     var taskList: some View {
         List {
-            if taskStore.isLoading {
-                ProgressView()
-            } else {
-                ForEach(Array(taskStore.tasks.enumerated()), id: \.offset) { index, task in
-                        TaskView(taskModel: $taskStore.tasks[index])
-                            .swipeActions(edge: .leading) {
-                                viewModel.editButton(for: index, taskStore: taskStore)
-                            }
-                    
-                            .sheet(isPresented: $viewModel.isShowingEditTaskView) {
-                                if let task = viewModel.selectedTask {
-                                    EditTaskView(isPresented: $viewModel.isShowingEditTaskView, task: task)
-                                }
-                            }
+            ForEach(Array(taskItems.enumerated()), id: \.offset) { index, task in
+                TaskView(taskModel: $taskItems[index], coreDM: $coreDM)
+                    .swipeActions(edge: .leading) {
+                        viewModel.editButton(for: index, taskStore: taskStore)
                     }
-                .onDelete { indexSet in
-                    viewModel.deleteTask(at: indexSet.first!,
-                                         from: taskStore)
+                
+                    .sheet(isPresented: $viewModel.isShowingEditTaskView) {
+                        if let task = viewModel.selectedTask {
+                            EditTaskView(
+                                isPresented: $viewModel.isShowingEditTaskView,
+                                task: task,
+                                coreDM: $coreDM
+                            )
+                            .onDisappear {
+                                taskItems = coreDM.getAllTasks()
+                            }
+                        }
+                    }
+            }
+            .onDelete { indexSet in
+                indexSet.forEach { index in
+                    let task = taskItems[index]
+                    coreDM.deleteTask(with: task)
+                    taskItems = coreDM.getAllTasks()
                 }
             }
         }
@@ -58,8 +71,9 @@ private extension MainView {
     }
 }
 
+
 #Preview {
     @Previewable var viewModel = MainViewModel()
-    MainView(viewModel: viewModel)
-        .environmentObject(TaskStore())
+    MainView(viewModel: viewModel, coreDM: CoreDataManager())
+        .environmentObject(TaskStore(coreDataManager: CoreDataManager()))
 }

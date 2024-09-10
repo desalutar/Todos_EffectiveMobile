@@ -13,27 +13,34 @@ struct CreateNewTaskView: View {
     @State private var taskDescription = ""
     @State private var taskDate: Date? = Date()
     @Binding var isPresented: Bool
+    @Binding var coreDM: CoreDataManager
     
     var body: some View {
         VStack {
-            TaskFormView(taskName: $taskName, 
+            TaskFormView(taskName: $taskName,
                          taskDescription: $taskDescription,
                          taskDate: $taskDate
             )
             Button {
-                let newTask = TaskModel(
-                    id: taskStore.tasks.count + 1,
-                    todo: taskName,
-                    description: taskDescription,
-                    completed: true,
-                    userId: taskStore.tasks.count + 1,
-                    date: taskDate
-                )
-                taskStore.tasks.append(newTask)
-                print("Task added: \(newTask)")
-                taskName = ""
-                taskDescription = ""
-                isPresented.toggle()
+                let newId = (taskStore.tasks.map { Int($0.userId) }.max() ?? 0) + 1
+                 
+                 // Сохранение новой задачи
+                 taskStore.coreDataManager.saveTask(
+                     id: newId,
+                     todo: taskName,
+                     description: taskDescription,
+                     completed: false,
+                     userId: newId,
+                     date: taskDate
+                 )
+                 
+                 // Обновляем задачи
+                 coreDM.refreshTasks()
+                 
+                 // Очистка полей и закрытие представления
+                 taskName = ""
+                 taskDescription = ""
+                 isPresented.toggle()
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 15)

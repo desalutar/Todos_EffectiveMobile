@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct TaskView: View {
-    @Binding var taskModel: TaskModel
-    
+    @Binding var taskModel: TaskItem
+    @Binding var coreDM: CoreDataManager
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .listRowSeparatorLeading) {
-                    Text(taskModel.todo)
+                    Text(taskModel.todo ?? "")
                         .font(.title2)
                         .strikethrough(taskModel.completed ? false : true)
-                    Text(taskModel.description ?? "")
+                    Text(taskModel.taskDescription ?? "")
                         .font(.callout)
                         .opacity(0.6)
                 }
@@ -26,6 +26,7 @@ struct TaskView: View {
                 
                 Button {
                     taskModel.completed.toggle()
+                    coreDM.refreshTasks()
                 } label: {
                     Image(systemName: taskModel.completed ? "circle" : "checkmark.circle.fill")
                         .resizable()

@@ -9,24 +9,20 @@ import Foundation
 import SwiftUI
 
 final class MainViewModel: ObservableObject {
+    var taskItems = [TaskItem]()
     @Published var isShowingEditTaskView = false
-    @Published var selectedTask: TaskModel?
+    @Published var selectedTask: TaskItem?
     
-    @MainActor func showEditTask(at taskIndex: Int, taskStore: TaskStore) {
+    func showEditTask(at taskIndex: Int, taskStore: TaskStore) {
         selectedTask = taskStore.tasks[taskIndex]
         isShowingEditTaskView.toggle()
     }
-    
-    @MainActor func deleteTask(at index: Int, from taskStore: TaskStore) {
-        taskStore.tasks.remove(at: index)
-    }
  
     func fetchTasks() async {
-        let taskStore = TaskStore()
+        let taskStore = TaskStore(coreDataManager: CoreDataManager())
         await taskStore.fetchTasks()
     }
     
-    @MainActor
     func editButton(for index: Int, taskStore: TaskStore) -> some View {
         Button {
             self.showEditTask(at: index, taskStore: taskStore)
