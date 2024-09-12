@@ -52,8 +52,8 @@ private extension MainView {
             .onDelete { indexSet in
                 indexSet.forEach { index in
                     let task = taskStore.tasks[index]
-                    coreDM.deleteTask(with: task)
-                    taskStore.tasks = coreDM.getAllTasks()
+                    taskStore.coreDM.deleteTask(with: task)
+                    taskStore.tasks = taskStore.coreDM.getAllTasks().sorted { $0.userId > $1.userId }
                 }
             }
         }
