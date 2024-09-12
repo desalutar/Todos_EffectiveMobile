@@ -54,7 +54,7 @@ class CoreDataManager {
         
         do {
             try persistentContainer.viewContext.save()
-            refreshTasks()  // Обновление списка задач после сохранения
+            
         } catch {
             print("Failed to save task: \(error.localizedDescription)")
         }

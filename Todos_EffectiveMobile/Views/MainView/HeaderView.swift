@@ -35,9 +35,8 @@ struct HeaderView: View {
             }
             .sheet(isPresented: $isShowNewTaskView) {
                 CreateNewTaskView(
-                    taskStore: taskStore,
-                    isPresented: $isShowNewTaskView,
-                    coreDM: $coreDM
+                    taskStore: _taskStore,
+                    isPresented: $isShowNewTaskView
                 )
             }
             .onDisappear {

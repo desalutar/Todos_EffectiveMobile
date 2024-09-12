@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct CreateNewTaskView: View {
-    @State var taskStore: TaskStore
+    @EnvironmentObject var taskStore: TaskStore
     @State private var taskName = ""
     @State private var taskDescription = ""
     @State private var taskDate: Date? = Date()
     @Binding var isPresented: Bool
-    @Binding var coreDM: CoreDataManager
     
     var body: some View {
         VStack {
@@ -25,7 +24,7 @@ struct CreateNewTaskView: View {
                 let newId = (taskStore.tasks.map { Int($0.userId) }.max() ?? 0) + 1
                  
                  // Сохранение новой задачи
-                 taskStore.coreDataManager.saveTask(
+                taskStore.coreDM.saveTask(
                      id: newId,
                      todo: taskName,
                      description: taskDescription,
@@ -33,10 +32,8 @@ struct CreateNewTaskView: View {
                      userId: newId,
                      date: taskDate
                  )
-                 
-                 // Обновляем задачи
-                 coreDM.refreshTasks()
-                 
+                taskStore.tasks = taskStore.coreDM.getAllTasks().sorted { $0.userId > $1.userId }
+                
                  // Очистка полей и закрытие представления
                  taskName = ""
                  taskDescription = ""

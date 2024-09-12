@@ -10,12 +10,11 @@ import CoreData
 
 class TaskStore: ObservableObject {
     @Published var tasks: [TaskItem] = []
-    @Published var isLoading = true
-    
-    let coreDataManager: CoreDataManager
+    @Published @MainActor var isLoading = true
+    @Published var coreDM: CoreDataManager
     
     init(coreDataManager: CoreDataManager) {
-        self.coreDataManager = coreDataManager
+        self.coreDM = coreDataManager
     }
     
     @MainActor
@@ -23,12 +22,10 @@ class TaskStore: ObservableObject {
         isLoading = true
         
         do {
-            // Получаем данные с API
             let taskItemsDTO = try await APIService.shared.fetchTasksFromAPI()
-            
             // Сохраняем данные в Core Data
             for taskItemDTO in taskItemsDTO {
-                coreDataManager.saveTask(
+                coreDM.saveTask(
                     id: taskItemDTO.id,
                     todo: taskItemDTO.todo,
                     description: taskItemDTO.taskDescription,
@@ -37,13 +34,11 @@ class TaskStore: ObservableObject {
                     date: taskItemDTO.date
                 )
             }
-            
-            // Обновляем задачи
-            tasks = coreDataManager.getAllTasks()
+            tasks = coreDM.getAllTasks().sorted { $0.userId > $1.userId }
+            coreDM.refreshTasks()
         } catch {
             print("Error fetching tasks: \(error.localizedDescription)")
         }
-        
         isLoading = false
     }
 }

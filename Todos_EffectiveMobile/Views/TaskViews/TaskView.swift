@@ -26,7 +26,6 @@ struct TaskView: View {
                 
                 Button {
                     taskModel.completed.toggle()
-                    coreDM.refreshTasks()
                 } label: {
                     Image(systemName: taskModel.completed ? "circle" : "checkmark.circle.fill")
                         .resizable()

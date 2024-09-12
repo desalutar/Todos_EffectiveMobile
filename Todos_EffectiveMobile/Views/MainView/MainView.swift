@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct MainView: View {
-    @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var taskStore: TaskStore
     @StateObject var viewModel: MainViewModel
-    @State private var pickerNames = ["All", "Open", "Closed"]
     
     @State var coreDM: CoreDataManager
-    @State private var taskItems: [TaskItem] = [TaskItem]()
     
     var body: some View {
         NavigationStack {
@@ -26,11 +23,8 @@ struct MainView: View {
                 taskList
             }
             .background(Color(red: 242/255, green: 242/255, blue: 247/255))
-            .task(priority: .background, {
+            .task {
                 await taskStore.fetchTasks()
-            })
-            .onAppear {
-                taskItems = coreDM.getAllTasks().sorted { $0.userId > $1.userId }
             }
         }
     }
@@ -39,8 +33,8 @@ struct MainView: View {
 private extension MainView {
     var taskList: some View {
         List {
-            ForEach(Array(taskItems.enumerated()), id: \.offset) { index, task in
-                TaskView(taskModel: $taskItems[index], coreDM: $coreDM)
+            ForEach(Array(taskStore.tasks.enumerated()), id: \.offset) { index, task in
+                TaskView(taskModel: $taskStore.tasks[index], coreDM: $coreDM)
                     .swipeActions(edge: .leading) {
                         viewModel.editButton(for: index, taskStore: taskStore)
                     }
@@ -52,17 +46,14 @@ private extension MainView {
                                 task: task,
                                 coreDM: $coreDM
                             )
-                            .onDisappear {
-                                taskItems = coreDM.getAllTasks()
-                            }
                         }
                     }
             }
             .onDelete { indexSet in
                 indexSet.forEach { index in
-                    let task = taskItems[index]
+                    let task = taskStore.tasks[index]
                     coreDM.deleteTask(with: task)
-                    taskItems = coreDM.getAllTasks()
+                    taskStore.tasks = coreDM.getAllTasks()
                 }
             }
         }
